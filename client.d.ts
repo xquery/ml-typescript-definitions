@@ -21,6 +21,138 @@ declare module Marklogic {
     agent?: any
   }
 
+  export function Query<U>(): ResultProvider<U>
+
+  export interface Facet {
+
+  }
+
+  export interface IndexedName {
+  }
+
+  export interface FacetValue<F> {
+    name: string
+    count: number
+    value: F
+  }
+
+  export interface FacetCategories<F> {
+    type: string,
+    facetValues: FacetValue<F>[]
+  }
+
+  export interface Facets<F> {
+    categories: FacetCategories<F>
+  }
+
+  export interface Result {
+    index: number
+    uri: string
+    path: string
+    score: number
+    confidence: number
+    fitness: number
+    href: string
+    mimetype: string
+    format: string
+    matches: Match[]
+  }
+
+  export interface HighlightedText {
+    highlight: string
+  }
+
+  export interface Match {
+    path: string
+    'match-text': (string|HighlightedText)[]
+  }
+
+  export interface QueryResult<F> {
+    'snippet-format': string,
+    total: number,
+    start: number,
+    'page-length': number,
+    results: Result[],
+    facets: Facets<F>
+    qText: string
+    metrics: Metrics
+  }
+
+  export interface Metrics {
+    // TODO
+  }
+
+  export interface FetchedDocument<T> {
+    uri: string
+    category: string
+    format: string
+    contentType: string
+    contentLength: string
+    content: T
+    // TODO - Add metadata
+  }
+
+  export interface ParsedQuery {
+  }
+
+  export interface Region {
+  }
+
+  export interface GeoLocation {
+  }
+
+  export interface Transform {
+  }
+
+  export interface Query {
+    directory(dir:string):Query
+    where(query:Query):BuiltQuery
+    where(query:Query, parsedQuery:ParsedQuery):BuiltQuery
+    where(parsedQuery:ParsedQuery):BuiltQuery
+    facet(name:string, indexedName:string|IndexedName):Facet
+    pathIndex(pathExpression:string, namespaces?:Object):IndexedName
+    term(indexedName:string|IndexedName, term:string):Query
+    parsedFrom(query:string):ParsedQuery
+    geospatial(location:GeoLocation, criteria:Region):Query
+    circle(radius: number, lat: number, long: number):Region
+    geoPath(path:string): GeoLocation
+    and(...query:Query[]): Query
+    or(...query:Query[]): Query
+    snippet(): Transform
+    document(uris:string[]):Query
+  }
+
+  export interface BuiltQuery {
+    calculate(facet:Facet):BuiltQuery
+    withOptions(options:any):BuiltQuery
+    slice(start:number, length:number, transform:Transform):BuiltQuery
+  }
+
+  export interface Documents {
+    query<R, F>(query:BuiltQuery): ResultProvider<(FetchedDocument<R>|QueryResult<F>)[]>
+  }
+
+  export interface SparqlValue {
+    type: string
+    value: string
+  }
+
+  export interface SparqlBinding {
+    [varName:string]:SparqlValue
+  }
+
+  export interface SparqlResult {
+    bindings: SparqlBinding[]
+  }
+
+  export interface SparqlQueryResult {
+    results: SparqlResult
+  }
+
+  export interface Graphs {
+    sparql(type: string, query: string): ResultProvider<SparqlQueryResult>
+  }
+
   export interface Client {
     connectionParams: ConnectionParams
 
@@ -44,14 +176,18 @@ declare module Marklogic {
 
     release: () => void
 
+    documents: Documents
+
     setLogger: (logger: MLLog.Logger, isErrorFirst?: boolean) => void
 
     getLogger: () => MLLog.Logger
+
+    graphs: Graphs
   }
 
   export function createDatabaseClient(connectionParams: ConnectionParams): Client
 
-  export function queryBuilder()
+  export const queryBuilder:Query
 
   export function patchBuilder()
 

@@ -5,6 +5,8 @@ declare module xdmp {
 
   }
 
+  export function log(msg:any):void
+
   export function directory(dir:string, depth?:number):cts.ValueIterator<any>
   export function nodeUri(node:Node):string
 
@@ -30,6 +32,9 @@ declare module cts {
   export interface Reference {
   }
 
+  export interface Query {
+  }
+
   export function pathReference(path: string):Reference
 
   export function values(reference: Reference):ValueIterator<string>
@@ -37,6 +42,14 @@ declare module cts {
   export function frequency(value:string):number
 
   export function doc(uri:string): DocumentNode
+
+  export function search(query:Query):cts.ValueIterator<any>
+
+  export function andQuery(querys:Query[]):Query
+
+  export function wordQuery(query:string|string[]):Query
+
+  export function documentQuery(uri:string): Query
 }
 
 declare module fn {

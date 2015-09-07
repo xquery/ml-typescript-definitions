@@ -7,6 +7,10 @@
         "./*.d.ts",
         "./typings/**/*.d.ts"
     ],
+    "formatCodeOptions": {
+        "indentSize": 2,
+        "tabSize": 2
+    },
     "compileOnSave": true,
     "files": [
         "./client.d.ts",

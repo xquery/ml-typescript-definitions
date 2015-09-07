@@ -105,31 +105,31 @@ declare module Marklogic {
   }
 
   export interface Query {
-    directory(dir:string):Query
-    where(query:Query):BuiltQuery
-    where(query:Query, parsedQuery:ParsedQuery):BuiltQuery
-    where(parsedQuery:ParsedQuery):BuiltQuery
-    facet(name:string, indexedName:string|IndexedName):Facet
-    pathIndex(pathExpression:string, namespaces?:Object):IndexedName
-    term(indexedName:string|IndexedName, term:string):Query
-    parsedFrom(query:string):ParsedQuery
-    geospatial(location:GeoLocation, criteria:Region):Query
-    circle(radius: number, lat: number, long: number):Region
-    geoPath(path:string): GeoLocation
-    and(...query:Query[]): Query
-    or(...query:Query[]): Query
+    directory(dir: string): Query
+    where(query: Query): BuiltQuery
+    where(query: Query, parsedQuery: ParsedQuery): BuiltQuery
+    where(parsedQuery: ParsedQuery): BuiltQuery
+    facet(name: string, indexedName: string|IndexedName): Facet
+    pathIndex(pathExpression: string, namespaces?: Object): IndexedName
+    term(indexedName: string|IndexedName, term: string): Query
+    parsedFrom(query: string): ParsedQuery
+    geospatial(location: GeoLocation, criteria: Region): Query
+    circle(radius: number, lat: number, long: number): Region
+    geoPath(path: string): GeoLocation
+    and(...query: Query[]): Query
+    or(...query: Query[]): Query
     snippet(): Transform
-    document(uris:string[]):Query
+    document(uris: string[]): Query
   }
 
   export interface BuiltQuery {
-    calculate(facet:Facet):BuiltQuery
-    withOptions(options:any):BuiltQuery
-    slice(start:number, length:number, transform:Transform):BuiltQuery
+    calculate(facet: Facet): BuiltQuery
+    withOptions(options: any): BuiltQuery
+    slice(start: number, length: number, transform: Transform): BuiltQuery
   }
 
   export interface Documents {
-    query<R, F>(query:BuiltQuery): ResultProvider<(FetchedDocument<R>|QueryResult<F>)[]>
+    query<R, F>(query: BuiltQuery): ResultProvider<(FetchedDocument<R>|QueryResult<F>)[]>
   }
 
   export interface SparqlValue {
@@ -138,7 +138,7 @@ declare module Marklogic {
   }
 
   export interface SparqlBinding {
-    [varName:string]:SparqlValue
+    [varName: string]: SparqlValue
   }
 
   export interface SparqlResult {
@@ -187,7 +187,7 @@ declare module Marklogic {
 
   export function createDatabaseClient(connectionParams: ConnectionParams): Client
 
-  export const queryBuilder:Query
+  export const queryBuilder: Query
 
   export function patchBuilder()
 

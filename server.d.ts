@@ -24,6 +24,8 @@ declare module xdmp {
   export function nodeReplace(oldNode: any, newNode: any): void
 
   export function arrayValues<T>(values: T[], flatten?: boolean): cts.ValueIterator<T>
+
+  export function getOriginalUrl(): string
 }
 
 declare module cts {

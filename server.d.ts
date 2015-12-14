@@ -26,6 +26,8 @@ declare module xdmp {
   export function arrayValues<T>(values: T[], flatten?: boolean): cts.ValueIterator<T>
 
   export function getOriginalUrl(): string
+
+  export function getRequestHeader(name: string, defaultValue?: string): Iterator<string>
 }
 
 declare module cts {
